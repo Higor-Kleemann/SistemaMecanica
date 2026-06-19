@@ -1,0 +1,31 @@
+@model SistemaMecanica.Models.Fornecedor
+@{
+    ViewData["Title"] = "Excluir Fornecedor";
+}
+
+<h2>Excluir Fornecedor</h2>
+<hr />
+
+<div class="alert alert-danger">
+    Tem certeza que deseja excluir este fornecedor?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Código</dt>
+    <dd class="col-sm-9">@Model.Id</dd>
+
+    <dt class="col-sm-3">Nome Fantasia</dt>
+    <dd class="col-sm-9">@Model.NomeFantasia</dd>
+
+    <dt class="col-sm-3">CNPJ</dt>
+    <dd class="col-sm-9">@Model.CNPJ</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

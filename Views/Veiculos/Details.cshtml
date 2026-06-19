@@ -1,0 +1,35 @@
+@model SistemaMecanica.Models.Veiculo
+
+@{
+    ViewData["Title"] = "Detalhes do Veículo";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Detalhes do Veículo</h2>
+    <div class="d-flex gap-2">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Voltar</a>
+    </div>
+</div>
+
+<hr />
+
+<d1 class="row">
+    <dt class="col-sm-3">Código de Cadastro</dt>
+    <dd class="col-sm-9">@Model.Id</dd>
+
+    <dt class="col-sm-3">Cliente</dt>
+    <dd class="col-sm-9">@Model.Cliente?.NomeCompleto</dd>
+
+    <dt class="col-sm-3">Placa</dt>
+    <dd class="col-sm-9" style ="text-transform: uppercase;">@Model.Placa</dd>
+
+    <dt class="col-sm-3">Marca</dt>
+    <dd class="col-sm-9">@Model.Marca</dd>
+
+    <dt class="col-sm-3">Ano/Modelo</dt>
+    <dd class="col-sm-9">@Model.AnoModelo</dd>
+
+    <dt class="col-sm-3">KM</dt>
+    <dd class="col-sm-9">@Model.KM km</dd>
+</d1>

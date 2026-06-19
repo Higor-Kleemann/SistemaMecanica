@@ -1,0 +1,34 @@
+@model SistemaMecanica.Models.Cliente
+@{
+    ViewData["Title"] = "Excluir Cliente";
+}
+
+<h2>Excluir Cliente</h2>
+<hr />
+
+<div class="alert alert-danger">
+    Tem certeza que deseja excluir este cliente?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Código</dt>
+    <dd class="col-sm-9">@Model.Id</dd>
+
+    <dt class="col-sm-3">Nome</dt>
+    <dd class="col-sm-9">@Model.NomeCompleto</dd>
+
+    <dt class="col-sm-3">Tipo</dt>
+    <dd class="col-sm-9">@Model.TipoPessoa</dd>
+
+    <dt class="col-sm-3">Documento</dt>
+    <dd class="col-sm-9">@(Model.TipoPessoa == "PF" ? Model.CPF : Model.CNPJ)</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

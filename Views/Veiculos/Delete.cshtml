@@ -1,0 +1,37 @@
+@model SistemaMecanica.Models.Veiculo
+@{
+    ViewData["Title"] = "Excluir Veículo";
+}
+
+<h2>Excluir Veículo</h2>
+<hr />
+
+<div class="alert alert-danger">
+    Tem certeza que deseja excluir este veículo?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Placa</dt>
+    <dd class="col-sm-9">@Model.Placa</dd>
+
+    <dt class="col-sm-3">Marca</dt>
+    <dd class="col-sm-9">@Model.Marca</dd>
+
+    <dt class="col-sm-3">Ano/Modelo</dt>
+    <dd class="col-sm-9">@Model.AnoModelo</dd>
+
+    <dt class="col-sm-3">KM</dt>
+    <dd class="col-sm-9">@Model.KM km</dd>
+
+    <dt class="col-sm-3">Cor</dt>
+    <dd class="col-sm-9">@Model.Cor</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

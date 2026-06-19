@@ -1,0 +1,58 @@
+@model SistemaMecanica.Models.Veiculo
+@{
+    ViewData["Title"] = "Editar Veículo";
+}
+
+<h2>Editar Veículo</h2>
+<hr />
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="ClienteId" class="form-label">Cliente</label>
+        <select asp-for="ClienteId" class="form-select"
+                asp-items="@(new SelectList(ViewBag.Clientes, "Id", "NomeCompleto"))">
+            <option value="">Selecione o cliente...</option>
+        </select>
+        <span asp-validation-for="ClienteId" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label asp-for="Placa" class="form-label">Placa</label>
+            <input asp-for="Placa" class="form-control" />
+            <span asp-validation-for="Placa" class="text-danger"></span>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="Marca" class="form-label">Marca</label>
+            <input asp-for="Marca" class="form-control" />
+            <span asp-validation-for="Marca" class="text-danger"></span>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="AnoModelo" class="form-label">Ano/Modelo</label>
+            <input asp-for="AnoModelo" class="form-control" />
+            <span asp-validation-for="AnoModelo" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <label asp-for="KM" class="form-label">KM</label>
+            <input asp-for="KM" class="form-control" type="number" />
+            <span asp-validation-for="KM" class="text-danger"></span>
+        </div>
+        <div class="col-md-4 mb-3">
+            <label asp-for="Cor" class="form-label">Cor</label>
+            <input asp-for="Cor" class="form-control" />
+            <span asp-validation-for="Cor" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-warning">Salvar Alterações</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
