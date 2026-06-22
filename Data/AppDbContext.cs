@@ -17,5 +17,6 @@ namespace SistemaMecanica.Data
     public DbSet<OrdemServico> OrdensServico { get; set; } = null!;
     public DbSet<UnidadeMedida> UnidadesMedida { get; set; } = null!;
     public DbSet<Veiculo> Veiculos { get; set; } = null!;
+    public DbSet<Produto> Produtos { get; set; } = null!;
     }
 }

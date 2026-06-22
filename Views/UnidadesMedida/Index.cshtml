@@ -1,0 +1,32 @@
+@model IEnumerable<SistemaMecanica.Models.UnidadeMedida>
+@{
+    ViewData["Title"] = "Unidades de Medida";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Unidades de Medida</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Nova Unidade de Medida</a>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (UnidadeMedida unidade in Model)
+        {
+            <tr>
+                <td>@unidade.Id</td>
+                <td>@unidade.Nome</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@unidade.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@unidade.Id" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
