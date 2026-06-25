@@ -1,0 +1,39 @@
+@model IEnumerable<SistemaMecanica.Models.Estoque>
+@{
+    ViewData["Title"] = "Estoque";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Estoque</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Novo Item</a>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Código</th>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Prateleira</th>
+            <th>Nível</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var estoque in Model)
+        {
+            <tr>
+                <td>@estoque.Id</td>
+                <td>@estoque.Produto?.Nome</td>
+                <td>@estoque.Quantidade</td>
+                <td>@estoque.CodigoPrateleira</td>
+                <td>@estoque.CodigoNivel</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@estoque.Id" class="btn btn-sm btn-info">Detalhes</a>
+                    <a asp-action="Edit" asp-route-id="@estoque.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@estoque.Id" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

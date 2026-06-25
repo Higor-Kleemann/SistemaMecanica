@@ -1,0 +1,45 @@
+@model SistemaMecanica.Models.Estoque
+@{
+    ViewData["Title"] = "Novo Item de Estoque";
+}
+
+<h2>Novo Item de Estoque</h2>
+<hr />
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="ProdutoId" class="form-label">Produto</label>
+        <select asp-for="ProdutoId" class="form-select"
+                asp-items="@(new SelectList(ViewBag.Produtos, "Id", "Nome"))">
+            <option value="">Selecione o produto...</option>
+        </select>
+        <span asp-validation-for="ProdutoId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Quantidade" class="form-label">Quantidade</label>
+        <input asp-for="Quantidade" class="form-control" type="number" />
+        <span asp-validation-for="Quantidade" class="text-danger"></span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label asp-for="CodigoPrateleira" class="form-label">Código da Prateleira</label>
+            <input asp-for="CodigoPrateleira" class="form-control" />
+            <span asp-validation-for="CodigoPrateleira" class="text-danger"></span>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label asp-for="CodigoNivel" class="form-label">Nível da Prateleira</label>
+            <input asp-for="CodigoNivel" class="form-control" />
+            <span asp-validation-for="CodigoNivel" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success">Cadastrar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

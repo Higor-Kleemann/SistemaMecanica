@@ -1,0 +1,37 @@
+@model SistemaMecanica.Models.Estoque
+@{
+    ViewData["Title"] = "Excluir Item de Estoque";
+}
+
+<h2>Excluir Item de Estoque</h2>
+<hr />
+
+<div class="alert alert-danger">
+    Tem certeza que deseja excluir este item do estoque?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Código</dt>
+    <dd class="col-sm-9">@Model.Id</dd>
+
+    <dt class="col-sm-3">Produto</dt>
+    <dd class="col-sm-9">@Model.Produto?.Nome</dd>
+
+    <dt class="col-sm-3">Quantidade</dt>
+    <dd class="col-sm-9">@Model.Quantidade</dd>
+
+    <dt class="col-sm-3">Prateleira</dt>
+    <dd class="col-sm-9">@Model.CodigoPrateleira</dd>
+
+    <dt class="col-sm-3">Nível</dt>
+    <dd class="col-sm-9">@Model.CodigoNivel</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
