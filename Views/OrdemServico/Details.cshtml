@@ -1,0 +1,95 @@
+@model SistemaMecanica.Models.OrdemServico
+@{
+    ViewData["Title"] = "Detalhes da OS";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Ordem de Serviço #@Model.Id</h2>
+    <div class="d-flex gap-2">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+        <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+    </div>
+</div>
+<hr />
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-4">Cliente</dt>
+            <dd class="col-sm-8">@Model.Cliente?.NomeCompleto</dd>
+
+            <dt class="col-sm-4">Veículo</dt>
+            <dd class="col-sm-8">@Model.Veiculo?.Placa — @Model.Veiculo?.Marca @Model.Veiculo?.AnoModelo</dd>
+
+            <dt class="col-sm-4">Mecânico</dt>
+            <dd class="col-sm-8">@Model.Mecanico?.NomeCompleto</dd>
+        </dl>
+    </div>
+    <div class="col-md-6">
+        <dl class="row">
+            <dt class="col-sm-4">Data Entrada</dt>
+            <dd class="col-sm-8">@Model.DataEntrada.ToString("dd/MM/yyyy HH:mm")</dd>
+
+            <dt class="col-sm-4">Data Saída</dt>
+            <dd class="col-sm-8">@(Model.DataSaida.HasValue ? Model.DataSaida.Value.ToString("dd/MM/yyyy HH:mm") : "Em aberto")</dd>
+
+            <dt class="col-sm-4">Status</dt>
+            <dd class="col-sm-8">
+                <span class="badge @(Model.Status == "Aberto" ? "bg-warning" :
+                                     Model.Status == "Em andamento" ? "bg-primary" :
+                                     Model.Status == "Concluído" ? "bg-success" : "bg-secondary")">
+                    @Model.Status
+                </span>
+            </dd>
+
+            <dt class="col-sm-4">Valor Total</dt>
+            <dd class="col-sm-8">R$ @Model.ValorTotal.ToString("F2")</dd>
+        </dl>
+    </div>
+</div>
+
+<hr />
+<h4>Itens da Ordem de Serviço</h4>
+
+@if (Model.Itens != null && Model.Itens.Any())
+{
+    <table class="table table-striped table-hover mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Preço Unitário</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Itens)
+            {
+                <tr>
+                    <td>@item.Produto?.Nome</td>
+                    <td>@item.Quantidade</td>
+                    <td>R$ @item.PrecoUnitario.ToString("F2")</td>
+                    <td>R$ @((item.Quantidade * item.PrecoUnitario).ToString("F2"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="alert alert-info mt-3">Nenhum item adicionado a esta OS.</div>
+}
+
+<hr />
+<h4>Atualizar Status</h4>
+<form asp-action="AtualizarStatus" method="post" class="d-flex gap-2 mt-3">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="id" value="@Model.Id" />
+    <select name="status" class="form-select w-auto">
+        <option value="Aberto">Aberto</option>
+        <option value="Em andamento">Em andamento</option>
+        <option value="Concluído">Concluído</option>
+        <option value="Entregue">Entregue</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Atualizar</button>
+</form>

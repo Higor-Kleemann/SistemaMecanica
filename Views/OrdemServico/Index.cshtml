@@ -1,0 +1,49 @@
+@model IEnumerable<SistemaMecanica.Models.OrdemServico>
+@{
+    ViewData["Title"] = "Ordens de Serviço";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Ordens de Serviço</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Nova Ordem de Serviço</a>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Código</th>
+            <th>Cliente</th>
+            <th>Veículo</th>
+            <th>Mecânico</th>
+            <th>Data Entrada</th>
+            <th>Status</th>
+            <th>Valor Total</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ordem in Model)
+        {
+            <tr>
+                <td>@ordem.Id</td>
+                <td>@ordem.Cliente?.NomeCompleto</td>
+                <td>@ordem.Veiculo?.Placa</td>
+                <td>@ordem.Mecanico?.NomeCompleto</td>
+                <td>@ordem.DataEntrada.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <span class="badge @(ordem.Status == "Aberto" ? "bg-warning" :
+                                         ordem.Status == "Em andamento" ? "bg-primary" :
+                                         ordem.Status == "Concluído" ? "bg-success" : "bg-secondary")">
+                        @ordem.Status
+                    </span>
+                </td>
+                <td>R$ @ordem.ValorTotal.ToString("F2")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@ordem.Id" class="btn btn-sm btn-info">Detalhes</a>
+                    <a asp-action="Edit" asp-route-id="@ordem.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@ordem.Id" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

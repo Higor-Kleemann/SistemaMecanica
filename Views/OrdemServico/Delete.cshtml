@@ -1,0 +1,37 @@
+@model SistemaMecanica.Models.OrdemServico
+@{
+    ViewData["Title"] = "Excluir Ordem de Serviço";
+}
+
+<h2>Excluir Ordem de Serviço</h2>
+<hr />
+
+<div class="alert alert-danger">
+    Tem certeza que deseja excluir esta ordem de serviço?
+</div>
+
+<dl class="row">
+    <dt class="col-sm-3">Código</dt>
+    <dd class="col-sm-9">@Model.Id</dd>
+
+    <dt class="col-sm-3">Cliente</dt>
+    <dd class="col-sm-9">@Model.Cliente?.NomeCompleto</dd>
+
+    <dt class="col-sm-3">Veículo</dt>
+    <dd class="col-sm-9">@Model.Veiculo?.Placa</dd>
+
+    <dt class="col-sm-3">Status</dt>
+    <dd class="col-sm-9">@Model.Status</dd>
+
+    <dt class="col-sm-3">Valor Total</dt>
+    <dd class="col-sm-9">R$ @Model.ValorTotal.ToString("F2")</dd>
+</dl>
+
+<form asp-action="Delete" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
