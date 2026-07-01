@@ -1,0 +1,30 @@
+@model SistemaMecanica.Models.Produto
+@{
+    ViewData["Title"] = "Detalhes do Produto";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Detalhes do Produto</h2>
+    <div class="d-flex gap-2">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+        <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+    </div>
+</div>
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Código</dt>
+    <dd class="col-sm-9">@Model.Id</dd>
+
+    <dt class="col-sm-3">Nome</dt>
+    <dd class="col-sm-9">@Model.Nome</dd>
+
+    <dt class="col-sm-3">Categoria</dt>
+    <dd class="col-sm-9">@Model.Categoria?.Nome</dd>
+
+    <dt class="col-sm-3">Unidade de Medida</dt>
+    <dd class="col-sm-9">@Model.UnidadeMedida?.Nome</dd>
+
+    <dt class="col-sm-3">Preço</dt>
+    <dd class="col-sm-9">R$ @Model.Preco.ToString("F2")</dd>
+</dl>
