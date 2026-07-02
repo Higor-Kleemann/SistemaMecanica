@@ -38,12 +38,11 @@
     </div>
 
     <div class="mb-3">
-        <label asp-for="ValorTotal" class="form-label">Valor Total</label>
-        <div class="input-group">
-            <span class="input-group-text">R$</span>
-            <input asp-for="ValorTotal" class="form-control" type="number" step="0.01" />
+        <div class="mb-3">
+            <label asp-for="Observacao" class="form-label">Observação</label>
+            <textarea asp-for="Observacao" class="form-control" rows="4" 
+                    placeholder="Descreva o serviço a ser realizado..."></textarea>
         </div>
-        <span asp-validation-for="ValorTotal" class="text-danger"></span>
     </div>
 
     <div class="d-flex gap-2">

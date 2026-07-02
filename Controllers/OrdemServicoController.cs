@@ -45,6 +45,7 @@ public class OrdemServicoController : Controller
         {
             ordemServico.DataEntrada = DateTime.Now;
             ordemServico.Status = "Aberto";
+            ordemServico.ValorTotal = 0;
             _db.OrdensServico.Add(ordemServico);
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -97,7 +98,7 @@ public class OrdemServicoController : Controller
 //---------------------------------------------------------------
 
     [HttpGet]
-    public async Task<IActionResult> Details (int id)
+    public async Task<IActionResult> Details(int id)
     {
         var ordem = await _db.OrdensServico
             .Include(o => o.Cliente)
@@ -108,6 +109,8 @@ public class OrdemServicoController : Controller
             .FirstOrDefaultAsync(o => o.Id == id);
 
         if (ordem == null) return NotFound();
+
+        ViewBag.Produtos = await _db.Produtos.ToListAsync();
         return View(ordem);
     }
 

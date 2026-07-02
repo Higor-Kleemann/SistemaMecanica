@@ -13,5 +13,6 @@ public class OrdemServico
     public DateTime? DataSaida { get; set; }
     public string? Status { get; set; }
     public decimal ValorTotal { get; set; }
+    public string? Observacao { get; set; }
     public List<ItemOS> Itens { get; set; } = new List<ItemOS>();
 }
