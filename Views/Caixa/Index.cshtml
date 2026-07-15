@@ -33,7 +33,7 @@
                     var saldo = Model.Where(c => c.Tipo == "Entrada").Sum(c => c.Valor)
                               - Model.Where(c => c.Tipo == "Saida").Sum(c => c.Valor);
                 }
-                <h4 class="@(saldo >= 0 ? "text-success" : "text-danger")">R$ @saldo.ToString("F2")</h4>
+                <h4 class="text-primary">R$ @saldo.ToString("F2")</h4>
             </div>
         </div>
     </div>
@@ -56,7 +56,7 @@
         {
             <tr>
                 <td>@caixa.Id</td>
-                <td>#@caixa.OrdemServicoId</td>
+                <td>@(caixa.OrdemServicoId.HasValue ? $"#{caixa.OrdemServicoId}" : "Avulso")</td>
                 <td>
                     <span class="badge @(caixa.Tipo == "Entrada" ? "bg-success" : "bg-danger")">
                         @caixa.Tipo

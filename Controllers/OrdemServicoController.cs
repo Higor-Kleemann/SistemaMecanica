@@ -145,18 +145,41 @@ public class OrdemServicoController : Controller
 
 //------------------------------------------------------------------------
 
-    [HttpPost]
-    public async Task<IActionResult> AtualizarStatus(int id, string status)
+[HttpPost]
+public async Task<IActionResult> AtualizarStatus(int id, string status)
+{
+    var ordem = await _db.OrdensServico
+        .Include(o => o.Itens)
+        .FirstOrDefaultAsync(o => o.Id == id);
+
+    if (ordem == null) return NotFound();
+
+    ordem.Status = status;
+
+    if (status == "Concluído" || status == "Entregue")
     {
-        var ordem = await _db.OrdensServico.FindAsync(id);
-        if (ordem == null) return NotFound();
+        ordem.DataSaida = DateTime.Now;
 
-        ordem.Status = status;
+        // verifica se já existe registro no caixa para essa OS
+        var caixaExistente = await _db.Caixas
+            .FirstOrDefaultAsync(c => c.OrdemServicoId == id);
 
-        if(status == "Concluído") ordem.DataSaida = DateTime.Now;
-
-        await _db.SaveChangesAsync();
-        return RedirectToAction(nameof(Details), new { id });
+        if (caixaExistente == null)
+        {
+            var caixa = new Caixa
+            {
+                OrdemServicoId = id,
+                Tipo = "Entrada",
+                Valor = ordem.ValorTotal,
+                DataRegistro = DateTime.Now,
+                Descricao = $"Pagamento da OS #{id}"
+            };
+            _db.Caixas.Add(caixa);
+        }
     }
+
+    await _db.SaveChangesAsync();
+    return RedirectToAction(nameof(Details), new { id });
+}
 
 }

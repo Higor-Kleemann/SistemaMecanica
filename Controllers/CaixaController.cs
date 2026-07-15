@@ -16,13 +16,14 @@ public class CaixaController : Controller
 
 //-------------------------------------------------------------------------------
 
-    public async Task<IActionResult> Index()
-    {
-        var registros = await _db.Caixas
-            .Include(c => c.OrdemServico)
-            .ToListAsync();
-        return View(registros);
-    }
+        public async Task<IActionResult> Index()
+        {
+            var registros = await _db.Caixas
+                .Include(c => c.OrdemServico)
+                .ThenInclude(o => o.Cliente)
+                .ToListAsync();
+            return View(registros);
+        }
 
 //-------------------------------------------------------------------------------
 

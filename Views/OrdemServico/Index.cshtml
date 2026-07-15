@@ -32,8 +32,9 @@
                 <td>@ordem.DataEntrada.ToString("dd/MM/yyyy")</td>
                 <td>
                     <span class="badge @(ordem.Status == "Aberto" ? "bg-warning" :
-                                         ordem.Status == "Em andamento" ? "bg-primary" :
-                                         ordem.Status == "Concluído" ? "bg-success" : "bg-secondary")">
+                            ordem.Status == "Em andamento" ? "bg-primary" :
+                            ordem.Status == "Concluído" ? "bg-success" :
+                            ordem.Status == "Entregue" ? "bg-info" : "bg-secondary")">
                         @ordem.Status
                     </span>
                 </td>

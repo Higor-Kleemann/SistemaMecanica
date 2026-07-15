@@ -33,6 +33,14 @@ public class ItemOSController : Controller
 
             //recalcula o valor total da OS
             await RecalcularValorTotal(item.OrdemServicoId);
+
+            // muda status para Em andamento ao adicionar primeiro item
+            var ordem = await _db.OrdensServico.FindAsync(item.OrdemServicoId);
+            if (ordem != null && ordem.Status == "Aberto")
+            {
+                ordem.Status = "Em andamento";
+                await _db.SaveChangesAsync();
+            }
         }
 
         return RedirectToAction("Details", "OrdemServico", new { id = item.OrdemServicoId });
@@ -59,7 +67,7 @@ public class ItemOSController : Controller
 
     private async Task RecalcularValorTotal(int ordemServicoId)
     {
-        var ordem = await _db.OrdensServico.Include(o => o.Itens).FirstOrDefaultAsync();
+        var ordem = await _db.OrdensServico.Include(o => o.Itens).FirstOrDefaultAsync(o => o.Id == ordemServicoId);
 
         if(ordem != null)
         {

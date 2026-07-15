@@ -36,8 +36,9 @@
             <dt class="col-sm-4">Status</dt>
             <dd class="col-sm-8">
                 <span class="badge @(Model.Status == "Aberto" ? "bg-warning" :
-                                     Model.Status == "Em andamento" ? "bg-primary" :
-                                     Model.Status == "Concluído" ? "bg-success" : "bg-secondary")">
+                     Model.Status == "Em andamento" ? "bg-primary" :
+                     Model.Status == "Concluído" ? "bg-success" :
+                     Model.Status == "Entregue" ? "bg-info" : "bg-secondary")">
                     @Model.Status
                 </span>
             </dd>
@@ -54,28 +55,37 @@
 <hr />
 <h4>Itens da Ordem de Serviço</h4>
 
-<form asp-controller="ItemOS" asp-action="Adicionar" method="post" class="row g-3 mt-2 mb-4">
-    @Html.AntiForgeryToken()
-    <input type="hidden" name="OrdemServicoId" value="@Model.Id" />
+@if (Model.Status != "Concluído" && Model.Status != "Entregue")
+{
+    <form asp-controller="ItemOS" asp-action="Adicionar" method="post" class="row g-3 mt-2 mb-4">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="OrdemServicoId" value="@Model.Id" />
 
-    <div class="col-md-5">
-        <select name="ProdutoId" class="form-select">
-            <option value="">Selecione o produto...</option>
-            @foreach (var produto in ViewBag.Produtos)
-            {
-                <option value="@produto.Id">@produto.Nome — R$ @produto.Preco.ToString("F2")</option>
-            }
-        </select>
-    </div>
+        <div class="col-md-5">
+            <select name="ProdutoId" class="form-select">
+                <option value="">Selecione o produto...</option>
+                @foreach (var produto in ViewBag.Produtos)
+                {
+                    <option value="@produto.Id">@produto.Nome — R$ @produto.Preco.ToString("F2")</option>
+                }
+            </select>
+        </div>
 
-    <div class="col-md-3">
-        <input name="Quantidade" type="number" class="form-control" placeholder="Quantidade" min="1" value="1" />
-    </div>
+        <div class="col-md-3">
+            <input name="Quantidade" type="number" class="form-control" placeholder="Quantidade" min="1" value="1" />
+        </div>
 
-    <div class="col-md-2">
-        <button type="submit" class="btn btn-success w-100">+ Adicionar</button>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-success w-100">+ Adicionar</button>
+        </div>
+    </form>
+}
+else
+{
+    <div class="alert alert-warning mt-2 mb-4">
+        Esta OS está finalizada e não permite mais alterações nos itens.
     </div>
-</form>
+}
 
 @if (Model.Itens != null && Model.Itens.Any())
 {
@@ -97,14 +107,17 @@
                     <td>@item.Quantidade</td>
                     <td>R$ @item.PrecoUnitario.ToString("F2")</td>
                     <td>R$ @((item.Quantidade * item.PrecoUnitario).ToString("F2"))</td>
-                    <td>
+                <td>
+                    @if (Model.Status != "Concluído" && Model.Status != "Entregue")
+                    {
                         <form asp-controller="ItemOS" asp-action="Remover" method="post">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="id" value="@item.Id" />
                             <input type="hidden" name="ordemServicoId" value="@Model.Id" />
                             <button type="submit" class="btn btn-sm btn-danger">Remover</button>
                         </form>
-                    </td>
+                    }
+                </td>
                 </tr>
             }
         </tbody>
@@ -123,14 +136,37 @@ else
 
 <hr />
 <h4>Atualizar Status</h4>
-<form asp-action="AtualizarStatus" method="post" class="d-flex gap-2 mt-3">
-    @Html.AntiForgeryToken()
-    <input type="hidden" name="id" value="@Model.Id" />
-    <select name="status" class="form-select w-auto">
-        <option value="Aberto">Aberto</option>
-        <option value="Em andamento">Em andamento</option>
-        <option value="Concluído">Concluído</option>
-        <option value="Entregue">Entregue</option>
-    </select>
-    <button type="submit" class="btn btn-primary">Atualizar</button>
-</form>
+<div class="d-flex gap-2 mt-3">
+
+    @if (Model.Status == "Aberto" || Model.Status == "Em andamento")
+    {
+        <form asp-action="AtualizarStatus" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="status" value="Concluído" />
+            <button type="submit" class="btn btn-success">
+                ✔ Marcar como Concluído
+            </button>
+        </form>
+    }
+
+    @if (Model.Status == "Concluído")
+    {
+        <form asp-action="AtualizarStatus" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <input type="hidden" name="status" value="Entregue" />
+            <button type="submit" class="btn btn-primary">
+                🚗 Marcar como Entregue
+            </button>
+        </form>
+    }
+
+    @if (Model.Status == "Entregue" || Model.Status == "Concluído")
+    {
+        <span class="badge bg-success fs-6 p-2">
+            ✔ OS Finalizada — Caixa atualizado automaticamente
+        </span>
+    }
+
+</div>
