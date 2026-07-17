@@ -41,8 +41,12 @@
                 <td>R$ @ordem.ValorTotal.ToString("F2")</td>
                 <td>
                     <a asp-action="Details" asp-route-id="@ordem.Id" class="btn btn-sm btn-info">Detalhes</a>
-                    <a asp-action="Edit" asp-route-id="@ordem.Id" class="btn btn-sm btn-warning">Editar</a>
-                    <a asp-action="Delete" asp-route-id="@ordem.Id" class="btn btn-sm btn-danger">Excluir</a>
+
+                    @if (ordem.Status != "Concluído" && ordem.Status != "Entregue")
+                    {
+                        <a asp-action="Edit" asp-route-id="@ordem.Id" class="btn btn-sm btn-warning">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@ordem.Id" class="btn btn-sm btn-danger">Excluir</a>
+                    }
                 </td>
             </tr>
         }

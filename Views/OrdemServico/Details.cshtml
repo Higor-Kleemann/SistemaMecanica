@@ -3,13 +3,14 @@
     ViewData["Title"] = "Detalhes da OS";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Ordem de Serviço #@Model.Id</h2>
-    <div class="d-flex gap-2">
+<div class="d-flex gap-2">
+    @if (Model.Status != "Concluído" && Model.Status != "Entregue")
+    {
         <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
-        <a asp-action="Index" class="btn btn-secondary">Voltar</a>
-    </div>
+    }
+    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
 </div>
+
 <hr />
 
 <div class="row mb-4">
