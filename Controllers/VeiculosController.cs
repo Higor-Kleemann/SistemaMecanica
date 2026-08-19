@@ -14,14 +14,23 @@ public class VeiculosController : Controller
         _db = db;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? busca)
     {
-        var veiculos = await _db.Veiculos
-            .Include(v => v.Cliente)
-            .ToListAsync();
+        var query = _db.Veiculos.Include(v => v.Cliente).AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(busca))
+        {
+            var termo = busca.ToLower();
+            query = query.Where(v =>
+                (v.Placa != null && v.Placa.ToLower().Contains(termo)) ||
+                (v.Cliente != null && v.Cliente.NomeCompleto != null && v.Cliente.NomeCompleto.ToLower().Contains(termo)));
+        }
+
+        ViewBag.Busca = busca;
+
+        var veiculos = await query.ToListAsync();
         return View(veiculos);
     }
-
 //-------------------------------------------------------------------------------
  
     [HttpGet] 
@@ -113,6 +122,15 @@ public class VeiculosController : Controller
     }
     
 //-------------------------------------------------------------------------------
- 
-    
+
+    [HttpGet]
+    public async Task<IActionResult> GetPorCliente(int clienteId)
+    {
+        var veiculos = await _db.Veiculos
+            .Where(v => v.ClienteId == clienteId)
+            .Select(v => new { id = v.Id, placa = v.Placa })
+            .ToListAsync();
+
+        return Json(veiculos);
+    }    
 }

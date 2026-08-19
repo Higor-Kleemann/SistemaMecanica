@@ -15,9 +15,19 @@ public class EstoqueController : Controller
 
 //-----------------------------------------------------
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? busca)
     {
-        var estoques = await _db.Estoques.Include(e => e.Produto).ToListAsync();
+        var query = _db.Estoques.Include(e => e.Produto).AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(busca))
+        {
+            var termo = busca.ToLower();
+            query = query.Where(e => e.Produto != null && e.Produto.Nome != null && e.Produto.Nome.ToLower().Contains(termo));
+        }
+
+        ViewBag.Busca = busca;
+
+        var estoques = await query.ToListAsync();
         return View(estoques);
     }
 

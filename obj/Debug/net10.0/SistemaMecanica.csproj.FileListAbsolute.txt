@@ -214,3 +214,5 @@ C:\Users\PC-Novo\projeto_higor\SistemaMecanica\bin\Debug\net10.0\runtimes\win-x8
 C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\SistemaM.85F371C9.Up2Date
 c:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\compressed\xdjydb4pj3-{0}-dilg1ih6xz-dilg1ih6xz.gz
 c:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\SistemaMecanica.sourcelink.json
+C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\compressed\266aqawy25-{0}-xj0pzv2p7o-xj0pzv2p7o.gz
+C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\compressed\kp6rvj6zl1-{0}-452k41qw38-452k41qw38.gz

@@ -14,11 +14,22 @@ public class FornecedoresController : Controller
         _db = db;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? busca)
     {
-        var fornecedores = await _db.Fornecedores.ToListAsync();
+        var query = _db.Fornecedores.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(busca))
+        {
+            var termo = busca.ToLower();
+            query = query.Where(f => f.CNPJ != null && f.CNPJ.ToLower().Contains(termo));
+        }
+
+        ViewBag.Busca = busca;
+
+        var fornecedores = await query.ToListAsync();
         return View(fornecedores);
     }
+
 //-------------------------------------------------------------------------------
  
     [HttpGet]

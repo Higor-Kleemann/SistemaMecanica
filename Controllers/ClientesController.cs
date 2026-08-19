@@ -14,9 +14,22 @@ public class ClientesController : Controller
         _db = db;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? busca)
     {
-        var clientes = await _db.Clientes.ToListAsync();
+        var query = _db.Clientes.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(busca))
+        {
+            var termo = busca.ToLower();
+            query = query.Where(c =>
+                (c.NomeCompleto != null && c.NomeCompleto.ToLower().Contains(termo)) ||
+                (c.CPF != null && c.CPF.ToLower().Contains(termo)) ||
+                (c.CNPJ != null && c.CNPJ.ToLower().Contains(termo)));
+        }
+
+        ViewBag.Busca = busca;
+
+        var clientes = await query.ToListAsync();
         return View(clientes);
     }
 

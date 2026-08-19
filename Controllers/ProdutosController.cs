@@ -16,9 +16,19 @@ public class ProdutosController : Controller
 
 //-------------------------------------------------------------------------------    
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? busca)
     {
-        var produtos = await _db.Produtos.Include(p => p.Categoria).Include(p => p.UnidadeMedida).ToListAsync();
+        var query = _db.Produtos.Include(p => p.Categoria).Include(p => p.UnidadeMedida).AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(busca))
+        {
+            var termo = busca.ToLower();
+            query = query.Where(p => p.Nome != null && p.Nome.ToLower().Contains(termo));
+        }
+
+        ViewBag.Busca = busca;
+
+        var produtos = await query.ToListAsync();
         return View(produtos);
     }
 

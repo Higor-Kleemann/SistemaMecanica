@@ -8,6 +8,23 @@
     <a asp-action="Create" class="btn btn-primary">+ Nova Ordem de Serviço</a>
 </div>
 
+<form asp-action="Index" method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label class="form-label">Data Início</label>
+        <input type="date" name="dataInicio" class="form-control" value="@ViewBag.DataInicio" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Data Fim</label>
+        <input type="date" name="dataFim" class="form-control" value="@ViewBag.DataFim" />
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary me-2">Filtrar</button>
+        <a asp-action="Index" class="btn btn-secondary">Limpar</a>
+    </div>
+</form>
+
+<table class="table table-striped table-hover">
+
 <table class="table table-striped table-hover">
     <thead class="table-dark">
         <tr>

@@ -15,14 +15,25 @@ public class OrdemServicoController : Controller
 
 //----------------------------------------------------------------
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(DateTime? dataInicio, DateTime? dataFim)
     {
-        var ordens = await _db.OrdensServico
+        var query = _db.OrdensServico
             .Include(o => o.Cliente)
             .Include(o => o.Veiculo)
             .Include(o => o.Mecanico)
-            .ToListAsync();
-            return View(ordens);
+            .AsQueryable();
+
+        if (dataInicio.HasValue)
+            query = query.Where(o => o.DataEntrada.Date >= dataInicio.Value.Date);
+
+        if (dataFim.HasValue)
+            query = query.Where(o => o.DataEntrada.Date <= dataFim.Value.Date);
+
+        ViewBag.DataInicio = dataInicio?.ToString("yyyy-MM-dd");
+        ViewBag.DataFim = dataFim?.ToString("yyyy-MM-dd");
+
+        var ordens = await query.ToListAsync();
+        return View(ordens);
     }
 
 //------------------------------------------------------------------
@@ -106,14 +117,23 @@ public class OrdemServicoController : Controller
             .Include(o => o.Mecanico)
             .Include(o => o.Itens)
                 .ThenInclude(i => i.Produto)
+            .Include(o => o.Itens)
+                .ThenInclude(i => i.Servico)
             .FirstOrDefaultAsync(o => o.Id == id);
 
         if (ordem == null) return NotFound();
 
-        ViewBag.Produtos = await _db.Produtos.ToListAsync();
+        ViewBag.Produtos = await _db.Estoques
+            .Where(e => e.Quantidade > 0)
+            .Include(e => e.Produto)
+            .Select(e => e.Produto)
+            .Distinct()
+            .ToListAsync();
+
+        ViewBag.Servicos = await _db.Servicos.ToListAsync();
+
         return View(ordem);
     }
-
 //----------------------------------------------------------------
 
     [HttpGet]

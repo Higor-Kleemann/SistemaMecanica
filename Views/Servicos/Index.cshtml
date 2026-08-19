@@ -1,0 +1,36 @@
+@model IEnumerable<SistemaMecanica.Models.Servico>
+@{
+    ViewData["Title"] = "Serviços";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Serviços</h2>
+    <a asp-action="Create" class="btn btn-primary">+ Novo Serviço</a>
+</div>
+
+<table class="table table-striped table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Ações</th>
+            <th>Preço</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var servico in Model)
+        {
+            <tr>
+                <td>@servico.Id</td>
+                <td>@servico.Nome</td>
+                <td>@servico.Descricao</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@servico.Id" class="btn btn-sm btn-warning">Editar</a>
+                    <a asp-action="Delete" asp-route-id="@servico.Id" class="btn btn-sm btn-danger">Excluir</a>
+                </td>
+                <td>@(servico.Preco.HasValue ? $"R$ {servico.Preco.Value.ToString("F2")}" : "Variável")</td>
+            </tr>
+        }
+    </tbody>
+</table>
