@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SistemaMecanica")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+723cc9bb4273535e203d9a24d48812f77eded9ab")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4ce5502ef6f5c46d598a38f4bd454daa611014bc")]
 [assembly: System.Reflection.AssemblyProductAttribute("SistemaMecanica")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SistemaMecanica")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

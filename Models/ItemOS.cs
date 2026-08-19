@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace SistemaMecanica.Models;
 
 public class ItemOS
@@ -7,10 +9,13 @@ public class ItemOS
     public OrdemServico? OrdemServico { get; set; }
     public int? ProdutoId { get; set; }
     public Produto? Produto { get; set; }
+
+    [Range(1, int.MaxValue, ErrorMessage = "A quantidade deve ser maior que zero")]
     public int Quantidade { get; set; }
+
     public decimal PrecoUnitario { get; set; }
 
     public int? ServicoId { get; set; }
     public Servico? Servico { get; set; }
-    public string? Descricao{ get; set; }
+    public string? Descricao { get; set; }
 }
