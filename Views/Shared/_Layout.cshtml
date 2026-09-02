@@ -10,68 +10,61 @@
     <link rel="stylesheet" href="~/SistemaMecanica.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SistemaMecanica</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Index">Clientes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Fornecedores" asp-action="Index">Fornecedores</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Mecanicos" asp-action="Index">Mecanicos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Veiculos" asp-action="Index">Veiculos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Produtos" asp-action="Index">Produtos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Servicos" asp-action="Index">Serviços</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Estoque" asp-action="Index">Estoque</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="OrdemServico" asp-action="Index">Ordem de Serviço</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Caixa" asp-action="Index">Caixa</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="Categorias" asp-action="Index">Categorias</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="UnidadesMedida" asp-action="Index">Unidades de Medida</a>
-                        </li>
-                    </ul>
-                </div>
+    @{
+        var controllerAtual = ViewContext.RouteData.Values["controller"]?.ToString();
+    }
+
+    <button class="sidebar-toggle d-md-none" type="button" aria-label="Abrir menu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="app-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-brand">
+                <a asp-area="" asp-controller="Home" asp-action="Index">SistemaMecanica</a>
+            </div>
+
+            <div class="sidebar-group">
+                <span class="sidebar-group-title">Cadastros</span>
+                <a class="sidebar-link @(controllerAtual == "Clientes" ? "active" : "")" asp-controller="Clientes" asp-action="Index">Clientes</a>
+                <a class="sidebar-link @(controllerAtual == "Veiculos" ? "active" : "")" asp-controller="Veiculos" asp-action="Index">Veículos</a>
+                <a class="sidebar-link @(controllerAtual == "Fornecedores" ? "active" : "")" asp-controller="Fornecedores" asp-action="Index">Fornecedores</a>
+                <a class="sidebar-link @(controllerAtual == "Mecanicos" ? "active" : "")" asp-controller="Mecanicos" asp-action="Index">Mecânicos</a>
+            </div>
+
+            <div class="sidebar-group">
+                <span class="sidebar-group-title">Catálogo</span>
+                <a class="sidebar-link @(controllerAtual == "Produtos" ? "active" : "")" asp-controller="Produtos" asp-action="Index">Produtos</a>
+                <a class="sidebar-link @(controllerAtual == "Servicos" ? "active" : "")" asp-controller="Servicos" asp-action="Index">Serviços</a>
+                <a class="sidebar-link @(controllerAtual == "Estoque" ? "active" : "")" asp-controller="Estoque" asp-action="Index">Estoque</a>
+                <a class="sidebar-link @(controllerAtual == "Categorias" ? "active" : "")" asp-controller="Categorias" asp-action="Index">Categorias</a>
+                <a class="sidebar-link @(controllerAtual == "UnidadesMedida" ? "active" : "")" asp-controller="UnidadesMedida" asp-action="Index">Unidades de Medida</a>
+            </div>
+
+            <div class="sidebar-group">
+                <span class="sidebar-group-title">Operação</span>
+                <a class="sidebar-link @(controllerAtual == "OrdemServico" ? "active" : "")" asp-controller="OrdemServico" asp-action="Index">Ordem de Serviço</a>
+                <a class="sidebar-link @(controllerAtual == "Caixa" ? "active" : "")" asp-controller="Caixa" asp-action="Index">Caixa</a>
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+        <div class="main-content">
+            <main role="main" class="container pb-3 pt-3">
+                @RenderBody()
+            </main>
+
+            <footer class="border-top footer text-muted">
+                <div class="container">
+                    &copy; 2026 - SistemaMecanica - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </div>
+            </footer>
+        </div>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - SistemaMecanica - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/layout/sidebar.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -16,14 +16,45 @@ public class CaixaController : Controller
 
 //-------------------------------------------------------------------------------
 
-        public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? tipo, DateTime? dataInicio, DateTime? dataFim, string? periodo)
+    {
+        var hoje = DateTime.Now;
+
+        // atalhos rápidos: sobrescrevem as datas manuais quando informados
+        if (!string.IsNullOrWhiteSpace(periodo))
         {
-            var registros = await _db.Caixas
-                .Include(c => c.OrdemServico)
-                .ThenInclude(o => o.Cliente)
-                .ToListAsync();
-            return View(registros);
+            dataFim = hoje;
+            dataInicio = periodo switch
+            {
+                "semana" => hoje.AddDays(-7),
+                "mes" => hoje.AddMonths(-1),
+                "ano" => hoje.AddYears(-1),
+                _ => dataInicio
+            };
         }
+
+        var query = _db.Caixas
+            .Include(c => c.OrdemServico)
+                .ThenInclude(o => o.Cliente)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(tipo))
+            query = query.Where(c => c.Tipo == tipo);
+
+        if (dataInicio.HasValue)
+            query = query.Where(c => c.DataRegistro.Date >= dataInicio.Value.Date);
+
+        if (dataFim.HasValue)
+            query = query.Where(c => c.DataRegistro.Date <= dataFim.Value.Date);
+
+        ViewBag.Tipo = tipo;
+        ViewBag.DataInicio = dataInicio?.ToString("yyyy-MM-dd");
+        ViewBag.DataFim = dataFim?.ToString("yyyy-MM-dd");
+        ViewBag.PeriodoAtivo = periodo;
+
+        var registros = await query.ToListAsync();
+        return View(registros);
+    }
 
 //-------------------------------------------------------------------------------
 

@@ -138,7 +138,6 @@ C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\rjsmcshtml.dswa
 C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\scopedcss\bundle\SistemaMecanica.styles.css
 C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\scopedcss\projectbundle\SistemaMecanica.bundle.scp.css
-C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\compressed\b9srwglw7w-{0}-b9sayid5wm-b9sayid5wm.gz
 C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\compressed\bk8s4uar32-{0}-61n19gt1b8-61n19gt1b8.gz
 C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\compressed\xdjydb4pj3-{0}-dilg1ih6xz-dilg1ih6xz.gz
 C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\compressed\266aqawy25-{0}-xj0pzv2p7o-xj0pzv2p7o.gz
@@ -216,3 +215,5 @@ C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\refint\SistemaM
 C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\SistemaMecanica.pdb
 C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\SistemaMecanica.genruntimeconfig.cache
 C:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\ref\SistemaMecanica.dll
+c:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\compressed\xw3jolt1n3-{0}-8tsnllx1xy-8tsnllx1xy.gz
+c:\Users\PC-Novo\projeto_higor\SistemaMecanica\obj\Debug\net10.0\compressed\b9srwglw7w-{0}-4a9z5ziy9p-4a9z5ziy9p.gz

@@ -8,6 +8,40 @@
     <a asp-action="Create" class="btn btn-primary">+ Novo Registro</a>
 </div>
 
+<form asp-action="Index" method="get" class="row g-3 mb-3 align-items-end">
+    <div class="col-md-2">
+        <label class="form-label">Tipo</label>
+        <select name="tipo" class="form-select">
+            <option value="">Todos</option>
+            <option value="Entrada" selected="@(ViewBag.Tipo == "Entrada")">Entrada</option>
+            <option value="Saida" selected="@(ViewBag.Tipo == "Saida")">Saída</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Data Início</label>
+        <input type="date" name="dataInicio" class="form-control" value="@ViewBag.DataInicio" />
+    </div>
+    <div class="col-md-3">
+        <label class="form-label">Data Fim</label>
+        <input type="date" name="dataFim" class="form-control" value="@ViewBag.DataFim" />
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-primary me-2">Filtrar</button>
+        <a asp-action="Index" class="btn btn-secondary">Limpar</a>
+    </div>
+</form>
+
+<div class="d-flex gap-2 mb-4">
+    <a asp-action="Index" asp-route-periodo="semana"
+       class="btn btn-sm @(ViewBag.PeriodoAtivo == "semana" ? "btn-dark" : "btn-outline-dark")">Última Semana</a>
+    <a asp-action="Index" asp-route-periodo="mes"
+       class="btn btn-sm @(ViewBag.PeriodoAtivo == "mes" ? "btn-dark" : "btn-outline-dark")">Último Mês</a>
+    <a asp-action="Index" asp-route-periodo="ano"
+       class="btn btn-sm @(ViewBag.PeriodoAtivo == "ano" ? "btn-dark" : "btn-outline-dark")">Último Ano</a>
+</div>
+
+<div class="row mb-4">
+
 <div class="row mb-4">
     <div class="col-md-4">
         <div class="card border-success">
