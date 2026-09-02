@@ -123,12 +123,16 @@ public class OrdemServicoController : Controller
 
         if (ordem == null) return NotFound();
 
-        ViewBag.Produtos = await _db.Estoques
-            .Where(e => e.Quantidade > 0)
+        var estoques = await _db.Estoques
             .Include(e => e.Produto)
+            .Where(e => e.Quantidade > 0)
+            .ToListAsync();
+
+        ViewBag.Produtos = estoques
+            .Where(e => e.Produto != null)
             .Select(e => e.Produto)
             .Distinct()
-            .ToListAsync();
+            .ToList();
 
         ViewBag.Servicos = await _db.Servicos.ToListAsync();
 

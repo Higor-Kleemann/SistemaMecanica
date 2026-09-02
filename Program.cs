@@ -1,7 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaMecanica.Data;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Força a cultura invariante (ponto como separador decimal) em toda a aplicação,
+// evitando ambiguidade no parsing de números vindos de formulários (inputs HTML sempre usam ponto)
+var cultureInfo = new CultureInfo("en-US");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -29,6 +36,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

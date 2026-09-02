@@ -66,7 +66,7 @@
         <div class="col-md-5">
             <select name="ProdutoId" class="form-select">
                 <option value="">Selecione o produto...</option>
-                @foreach (var produto in ViewBag.Produtos)
+                @foreach (SistemaMecanica.Models.Produto produto in ViewBag.Produtos)
                 {
                     <option value="@produto.Id">@produto.Nome — R$ @produto.Preco.ToString("F2")</option>
                 }
@@ -86,7 +86,7 @@
         <div class="col-md-4">
             <select name="ServicoId" class="form-select" id="selectServico">
                 <option value="">Selecione o serviço...</option>
-                @foreach (var servico in ViewBag.Servicos)
+                @foreach (SistemaMecanica.Models.Servico servico in ViewBag.Servicos)
                 {
                     <option value="@servico.Id"
                             data-preco="@servico.Preco?.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)">
